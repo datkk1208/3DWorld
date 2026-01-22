@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-
+using Unity.Cinemachine; // Nhớ thêm dòng này để dùng Cinemachine
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CinemachineImpulseSource))] // Yêu cầu có Source
 public class PlayerCombat : MonoBehaviour
 {
     [Header("Combat Settings")]
@@ -9,6 +10,8 @@ public class PlayerCombat : MonoBehaviour
     private Animator _animator;
     private int _currentCombo = 0;
     private float _lastAttackTime = -99f;
+
+    private CinemachineImpulseSource _impulseSource; // Khai báo biến
     // Thuộc tính để bên ngoài đọc (Chỉ đọc)
     public bool IsAttacking { get; private set; }
     private void Update()
@@ -23,8 +26,8 @@ public class PlayerCombat : MonoBehaviour
     public void Initialize()
     {
         _animator = GetComponent<Animator>();
+        _impulseSource = GetComponent<CinemachineImpulseSource>(); // Lấy component
     }
-
     public void HandleAttackInput()
     {
         // Tính thời gian từ cú đánh trước đến giờ
@@ -56,6 +59,11 @@ public class PlayerCombat : MonoBehaviour
 
         _lastAttackTime = Time.time;
         PlayAttackAnimation();
+        // --- KÍCH HOẠT RUNG ---
+        // Rung nhẹ ở đòn 1, 2. Rung mạnh ở đòn 3.
+        float shakeForce = (_currentCombo == 3) ? 0.5f : 0.1f;
+
+        _impulseSource.GenerateImpulse(shakeForce);
     }
     private void PlayAttackAnimation()
     {
