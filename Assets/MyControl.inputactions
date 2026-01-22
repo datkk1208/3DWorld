@@ -1,0 +1,57 @@
+{
+    "version": 1,
+    "name": "MyControl",
+    "maps": [
+        {
+            "name": "Look",
+            "id": "5d1b93a4-85ed-4fff-8280-4b86e5c97fab",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Value",
+                    "id": "a5eb7550-709e-4db7-947f-bb22c21d0544",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "200a2e6c-5133-4003-90ee-1fb9da24f2c4",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "147e6671-9a9c-493c-8b6c-65d586386c63",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e65a898e-391b-437e-83eb-aa64af403a8b",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(y=2)",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
