@@ -22,7 +22,13 @@ public class PlayerIdleState : PlayerBaseState
             SwitchState(_factory.Attack());
             return; // Quan trọng: return ngay để không chạy logic di chuyển
         }
-
+        // 2. KIỂM TRA NHẢY Ở ĐÂY
+        if (_ctx.InputProvider.IsJumpPressed && _ctx.IsGrounded())
+        {
+            Debug.Log("Đã nhận nút Nhảy!");
+            SwitchState(_factory.Jump());
+            return;
+        }
         // 2. Logic di chuyển
         if (_ctx.InputProvider.MoveInput.magnitude > 0)
         {

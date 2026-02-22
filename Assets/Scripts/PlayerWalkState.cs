@@ -32,5 +32,12 @@ public class PlayerWalkState : PlayerBaseState
         {
             SwitchState(_factory.Run());
         }
+        // 2. KIỂM TRA NHẢY Ở ĐÂY
+        if (_ctx.InputProvider.IsJumpPressed && _ctx.IsGrounded())
+        {
+            Debug.Log("Đã nhận nút Nhảy!");
+            SwitchState(_factory.Jump());
+            return;
+        }
     }
 }

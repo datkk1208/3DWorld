@@ -12,4 +12,5 @@
     public PlayerBaseState Run() => new PlayerRunState(_context, this);
     // Đăng ký trạng thái tấn công
     public PlayerBaseState Attack() => new PlayerAttackState(_context, this);
+    public PlayerBaseState Jump() => new PlayerJumpState(_context, this); // Thêm dòng này
 }
