@@ -3,6 +3,9 @@
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Health")]
+    public int MaxHealth = 100;
+    private int _currentHealth;
     [Header("Movement Settings")]
     public float WalkSpeed = 5.0f;
     public float RunSpeed = 10.0f;
@@ -30,7 +33,10 @@ public class PlayerController : MonoBehaviour
 
     // Internal Variables
     private int _animIDSpeed;
-
+    private void Start() // Nếu có hàm Start rồi thì chỉ thêm dòng dưới vào Start
+    {
+        _currentHealth = MaxHealth;
+    }
     private void Awake()
     {
         CharacterController = GetComponent<CharacterController>();
@@ -134,5 +140,37 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.forward * 0.5f, AttackRange);
+    }
+    public void TakeDamage(int damage)
+    {
+        if (_currentHealth <= 0) return; // Đã chết thì thôi, không nhận dame nữa
+
+        _currentHealth -= damage;
+        Debug.Log($"Player bị đánh trúng! Mất {damage} máu. Còn lại: {_currentHealth}");
+
+        if (_currentHealth <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            // Còn sống thì gọi animation giật mình
+            Animator.SetTrigger("Hit");
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player đã chết!");
+
+        // Gọi animation chết
+        Animator.SetTrigger("Die");
+
+        // Tắt CharacterController và Script này đi để Player nằm im, không di chuyển hay chém được nữa
+        CharacterController.enabled = false;
+        this.enabled = false;
+
+        // Tự động xóa object Player sau 3 giây (để kịp xem hết animation ngã xuống)
+        Destroy(gameObject, 3f);
     }
 }
