@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEngine.UI;
+using TMPro;
 public class EnemyHealth : MonoBehaviour
 {
+    // 2. Thêm biến vào phần khai báo:
+    [Header("UI")]
+    public Slider HealthBar;
+    public GameObject DamageTextPrefab;
     [Header("Stats")]
     [HideInInspector]
     public int MaxHealth = 100;
@@ -15,6 +20,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
+        if (HealthBar != null) HealthBar.value = 1f;
         _currentHealth = MaxHealth;
         _anim = GetComponent<Animator>();
         _aiScript = GetComponent<EnemyAI>();
@@ -27,6 +33,13 @@ public class EnemyHealth : MonoBehaviour
         if (_currentHealth <= 0) return;
 
         _currentHealth -= damage;
+        if (HealthBar != null) HealthBar.value = (float)_currentHealth / MaxHealth;
+        if (DamageTextPrefab != null)
+        {
+            // Tạo text số dame nảy lên trên đầu quái 1.5m
+            GameObject popup = Instantiate(DamageTextPrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            popup.GetComponentInChildren<TextMeshProUGUI>().text = "-" + damage;
+        }
         StartCoroutine(FlashColor());
 
         if (_currentHealth <= 0)
